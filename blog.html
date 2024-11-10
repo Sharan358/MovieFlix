@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoviesFlix Blog - Movie News, Reviews & More</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin-bottom: 0px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #000;
+        }
+
+        .blog-list {
+            padding: 100px 20px 40px;
+            text-align: center;
+        }
+
+        .blog-list h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .blog-card {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: scale(1.05);
+            background-color: #444;
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .blog-card h3 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .blog-card p {
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #222;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 700px;
+            color: #fff;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .close-btn {
+            color: #fff;
+            font-size: 30px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #e50914;
+        }
+
+        #blog-details {
+            margin-top: 20px;
+        }
+
+        footer{
+            background-color: #000; 
+            color: #fff; padding: 20px; 
+            text-align: center;
+        }
+        .footer a{
+            color: #fff; 
+            text-decoration: none; 
+            margin: 0 10px
+        }
+        .footer a:hover{
+            text-decoration: none; 
+            background-color: #d40813;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class='bx bx-movie'></i>MoviesFlix</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="Tvshows.html">TvShows</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="blog.html">Blog</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="blog-list">
+        <h2>Latest Movie News and Updates</h2>
+        <div class="blog-grid">
+            <div class="blog-card" onclick="openModal('post1')">
+                <img src="https://i.pinimg.com/474x/ae/0c/65/ae0c6506aa74d3940a025715d9a8ee8b.jpg" alt="Blog Post 1">
+                <h3>Why 'The Batman' is a Game Changer</h3>
+                <p>A deep dive into the new direction taken by 'The Batman' and its impact on superhero cinema...</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post2')">
+                <img src="https://i.pinimg.com/474x/e7/88/82/e7888275d9816a3c5d01e689e27f3dc8.jpg" alt="Blog Post 2">
+                <h3>Deadpool 3: What We Know So Far</h3>
+                <p>Get ready for the next installment in the Deadpool series. Here's everything you need to know...</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post3')">
+                <img src="https://i.pinimg.com/474x/f7/93/cf/f793cf13f485432251c4a2e6bfc5e4a3.jpg" alt="Blog Post 3">
+                <h3>Why Spider-Man: No Way Home Is A Masterpiece</h3>
+                <p>Let's talk about the emotional rollercoaster that is Spider-Man: No Way Home and why it’s a fan favorite...</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post4')">
+                <img src="https://i.pinimg.com/474x/34/24/ce/3424ce389dc05f87e9583516163401f1.jpg" alt="Blog Post 4">
+                <h3>The Secret Behind Venom's Success</h3>
+                <p>Venom's success at the box office has everyone talking. What made the movie so popular...</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post5')">
+                <img src="https://i.pinimg.com/474x/0d/af/73/0daf73d3471efc7ae0392b9255773ee9.jpg" alt="Blog Post 5">
+                <h3>The Evolution of Marvel Cinematic Universe (MCU)</h3>
+                <p>From "Iron Man" to "Avengers: Endgame," the MCU has evolved into a global phenomenon. Here's a breakdown of its journey...</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post6')">
+                <img src="https://i.pinimg.com/474x/76/5a/08/765a08c6280fb9c6a83f0f823fd3d707.jpg" alt="Blog Post 6">
+                <h3>The Rise of Streaming Platforms</h3>
+                <p>With Netflix, Amazon Prime, and Disney+, streaming has transformed the way we watch movies and shows. Is this the future of entertainment?</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post7')">
+                <img src="https://i.pinimg.com/474x/bd/ac/3e/bdac3ee1c21c264755358a90ff5a7771.jpg" alt="Blog Post 7">
+                <h3>How AI Is Revolutionizing Film Production</h3>
+                <p>From CGI to deepfake technology, AI is changing the way films are made. How will this technology continue to evolve and impact filmmaking?</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post8')">
+                <img src="https://i.pinimg.com/736x/32/c1/6b/32c16b008e7b765119daff796bea1364.jpg" alt="Blog Post 8">
+                <h3>The Best Sci-Fi Movies of the Decade</h3>
+                <p>From "Blade Runner 2049" to "Interstellar," the 2010s were a golden age for science fiction. Check out our picks for the top sci-fi films!</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post9')">
+                <img src="https://i.pinimg.com/736x/bb/1e/94/bb1e94a780b78a38e670a4b1ee298ade.jpg" alt="Blog Post 9">
+                <h3>Why Animated Films Aren’t Just For Kids</h3>
+                <p>Animated films like "Spider-Man: Into the Spider-Verse" and "Coco" prove that animation can be a medium for all ages. Here’s why.</p>
+            </div>
+            <div class="blog-card" onclick="openModal('post10')">
+                <img src="https://i.pinimg.com/736x/08/e0/dd/08e0dd3d0e3c5122d5774104d8bc49b8.jpg" alt="Blog Post 10">
+                <h3>Top 10 Horror Films That Will Keep You Up at Night</h3>
+                <p>If you’re looking for a good scare, these top 10 horror films will give you chills. Get ready for a terrifying movie marathon!
+                    1.veonica,2.conjuring all collection 3. nun ,4. annabelle, 5.Shining etc.
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 MoviesFlix. All Rights Reserved.</p>
+        <p>Follow us on:</p>
+        <p>
+            <a href="https://instagram.com">Instagram</a>|
+            <a href="https://facebook.com" >Facebook</a>|
+            <a href="http://www.linkedin.com/in/amudala-sharan-sai-57ab68321" >LinkedIn</a>
+        </p>
+    </footer>
+
+    <div id="blog-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="blog-details"></div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        const blogData = {
+            post1: {
+        title: 'Why "The Batman" is a Game Changer',
+        content: `<p>'The Batman' takes a darker, grittier approach to the iconic superhero, offering a fresh and exciting new perspective. 
+                With a focus on detective work, a more grounded plot, and strong performances, this movie has shifted the superhero genre towards a new direction.</p>`
+    },
+    post2: {
+        title: 'Deadpool 3: What We Know So Far',
+        content: `<p>Deadpool 3 promises to bring even more chaos and humor to the big screen. With Hugh Jackman returning as Wolverine and Ryan Reynolds reprising his role as the wisecracking antihero, fans can't wait for the next chapter.</p>`
+    },
+    post3: {
+        title: 'Why Spider-Man: No Way Home Is A Masterpiece',
+        content: `<p>Spider-Man: No Way Home is a fan-favorite for a reason. The film's emotional depth, packed with nostalgia and a thrilling multiverse storyline, makes it one of the best superhero films of all time.</p>`
+    },
+    post4: {
+        title: 'The Secret Behind Venom\'s Success',
+        content: `<p>Venom’s success at the box office wasn’t just a fluke. It’s a combination of the character’s strong comic-book fan base, the appealing antihero dynamic, and the performance of Tom Hardy that made the movie stand out.</p>`
+    },
+    post5: {
+        title: 'The Evolution of Marvel Cinematic Universe (MCU)',
+        content: `<p>From "Iron Man" to "Avengers: Endgame," the MCU has evolved into a global phenomenon. The intricate interwoven storylines and beloved characters have cemented the MCU's legacy as a cinematic powerhouse. Here's a breakdown of its journey so far.</p>`
+    },
+    post6: {
+        title: 'The Rise of Streaming Platforms',
+        content: `<p>With Netflix, Amazon Prime, and Disney+, streaming has transformed the way we watch movies and shows. The rise of these platforms has disrupted traditional cinema and TV, offering more convenience and a broader selection of content to global audiences. Is this the future of entertainment?</p>`
+    },
+    post7: {
+        title: 'How AI Is Revolutionizing Film Production',
+        content: `<p>AI is playing an increasingly important role in the film industry, from enhancing visual effects with deepfake technology to automating parts of the production process. Will AI soon replace human filmmakers, or will it become an invaluable tool to enhance creativity?</p>`
+    },
+    post8: {
+        title: 'The Best Sci-Fi Movies of the Decade',
+        content: `<p>The 2010s were a golden age for science fiction. With films like "Blade Runner 2049," "Interstellar," and "The Martian," the genre pushed the boundaries of technology, storytelling, and imagination. Here’s a roundup of the most mind-blowing sci-fi films of the decade.</p>`
+    },
+    post9: {
+        title: 'Why Animated Films Aren’t Just For Kids',
+        content: `<p>Animated films like "Spider-Man: Into the Spider-Verse" and "Coco" have shown that animation is not just for children. These films explore complex themes and are enjoyed by people of all ages. Here’s why animated films have such broad appeal.</p>`
+    },
+    post10: {
+        title: 'Top 10 Horror Films That Will Keep You Up at Night',
+        content: `<p>If you're a fan of scares, here's a list of the most spine-chilling horror films to keep you awake at night. Whether it's "The Conjuring" series, "The Shining," or the unsettling "Hereditary," these films are sure to deliver thrills and terror.</p>
+        <ul>
+            <li>1. Veronica</li>
+            <li>2. The Conjuring (all collections)</li>
+            <li>3. The Nun</li>
+            <li>4. Annabelle</li>
+            <li>5. The Shining</li>
+            <li>6. Hereditary</li>
+            <li>7. Get Out</li>
+            <li>8. It Follows</li>
+            <li>9. A Quiet Place</li>
+            <li>10. The Witch</li>
+        </ul>`
+    }
+};
+
+        function openModal(postId) {
+            const modal = document.getElementById('blog-modal');
+            const blogDetails = document.getElementById('blog-details');
+            const blogPost = blogData[postId];
+
+            blogDetails.innerHTML = `<h3>${blogPost.title}</h3>${blogPost.content}`;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('blog-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

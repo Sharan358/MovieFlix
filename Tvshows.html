@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoviesFlix - Movies</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin-bottom: 0px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #000;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e50914;
+        }
+
+      
+        .movie-list {
+            padding: 80px 20px 40px 20px;
+            text-align: center;
+        }
+
+        .movie-list h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-card {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            background-color: #444;
+        }
+
+        .movie-card img {
+            width: 100%;
+            transition: opacity 0.3s;
+            height: 300px;
+            border-radius: 5px;
+        }
+
+        .movie-card:hover img {
+            opacity: 0.9;
+        }
+
+        .movie-card h3 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .rating, .genre {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        .rating {
+            color: #e50914;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #222;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 700px;
+            color: #fff;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .close-btn {
+            color: #fff;
+            font-size: 30px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #e50914;
+        }
+
+        #movie-details {
+            margin-top: 20px;
+        }
+
+        #movie-details h3 {
+            font-size: 24px;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: none;
+            background-color: #d40813;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class='bx bx-movie'></i>MoviesFlix</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+            <a href="Tvshows.html">TvShows</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="blog.html">Blog</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="movie-list"  >
+        <h2>Trending Series</h2>
+        <div class="movie-grid">
+            <div class="movie-card"  onclick="openModal('movie1')">
+                <img src="https://i.pinimg.com/474x/02/f6/9c/02f69ce21ff6686ff567aecbc119ce60.jpg" alt="Movie 1">
+                <h3>Dark</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie2')">
+                <img src="https://i.pinimg.com/474x/86/0c/58/860c580c9382f74257eabb4586e01f2c.jpg" alt="Movie 2">
+                <h3>Money Heist</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Comedy</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie3')">
+                <img src="https://i.pinimg.com/474x/93/bc/eb/93bceb9dc583c4511b9742b182b763aa.jpg" alt="Movie 3">
+                <h3>You</h3>
+                <div class="rating">★★★★★</div>
+                <div class="genre">Action/Adventure</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie4')">
+                <img src="https://i.pinimg.com/474x/fc/95/d8/fc95d8279b54c69972642a2df303b84e.jpg" alt="Movie 4">
+                <h3>The Lost Of Us</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie5')">
+                <img src="https://i.pinimg.com/474x/9b/50/9c/9b509c7f02713f2f02f7e1b0699e99d3.jpg" alt="Movie 4">
+                <h3>Peaky Blinders</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+        </div><br>
+        
+        <h2>Action/Thriller</h2>
+        <div class="movie-grid">
+            <div class="movie-card"  onclick="openModal('movie6')">
+                <img src="https://i.pinimg.com/474x/2f/e4/68/2fe4683f67cab0c1fff5c2a44f580937.jpg" alt="Movie 1">
+                <h3>Squid Game</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie7')">
+                <img src="https://i.pinimg.com/474x/4a/0a/c9/4a0ac95d0524dcb5ab39957177b059cf.jpg" alt="Movie 2">
+                <h3>Reacher</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Comedy</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie8')">
+                <img src="https://i.pinimg.com/736x/da/1c/ff/da1cff2771122b2a28f57dfa6ca676bd.jpg" alt="Movie 3">
+                <h3>The First Responders</h3>
+                <div class="rating">★★★★★</div>
+                <div class="genre">Action/Adventure</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie9')">
+                <img src="https://i.pinimg.com/474x/e4/5a/8f/e45a8f4cb73ca8bb4d858ccc58b61fe0.jpg" alt="Movie 4">
+                <h3>The 8 Show</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie10')">
+                <img src="https://i.pinimg.com/474x/02/65/1a/02651af0fa9b1e1f5351c2d92a6820e0.jpg" alt="Movie 4">
+                <h3>Alice in Borderland</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+        </div><br>
+        <h2>Scifi/Horror</h2>
+        <div class="movie-grid">
+            <div class="movie-card" Onclick="openModal('movie11')">
+                <img src="https://i.pinimg.com/474x/f6/49/37/f64937917c46d96e7ced24e9006b24d7.jpg" alt="Movie 1">
+                <h3>From</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie12')">
+                <img src="https://i.pinimg.com/474x/ef/48/68/ef48685f3b1fec06c711b1ce511f81da.jpg" alt="Movie 2">
+                <h3>Stranger Things</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Comedy</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie13')">
+                <img src="https://i.pinimg.com/474x/0b/34/ce/0b34ce2145b475247577a5d438a199b0.jpg" alt="Movie 3">
+                <h3>Silicon Valley</h3>
+                <div class="rating">★★★★★</div>
+                <div class="genre">Action/Adventure</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie14')">
+                <img src="https://i.pinimg.com/474x/2e/48/55/2e4855c1ebfe5dd054d151631ed4b854.jpg" alt="Movie 4">
+                <h3>Moon Fall</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie15')">
+                <img src="https://i.pinimg.com/474x/80/36/51/8036511e7b01de4d45660acc1d5a8c93.jpg" alt="Movie 4">
+                <h3>The Ark</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+        </div><br>
+        <h2>Fantasy/Adventure</h2>
+        <div class="movie-grid">
+            <div class="movie-card" onclick="openModal('movie16')">
+                <img src="https://i.pinimg.com/474x/b5/f5/42/b5f5426389f06e0378b35cbb304cfe14.jpg" alt="Movie 1">
+                <h3>The Witcher</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card"  onclick="openModal('movie17')"> 
+                <img src="https://i.pinimg.com/474x/ea/0e/5a/ea0e5ae936d671139065a21c48a19c77.jpg" alt="Movie 1">
+                <h3>The Rings of the Power</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie18')">
+                <img src="https://i.pinimg.com/474x/67/8f/25/678f25cec1b7a368a308cc840a3607a7.jpg" alt="Movie 1">
+                <h3>The Game of thrones</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie19')">
+                <img src="https://i.pinimg.com/474x/ab/f0/8b/abf08bf0b0e340773f9b732e31c68585.jpg" alt="Movie 1">
+                <h3>Vikings</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie20')">
+                <img src="https://i.pinimg.com/474x/1f/be/41/1fbe41182fc0727011a81b5ae087264f.jpg" alt="Movie 1">
+                <h3>The House of the Dragons</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+        </div><br>
+        <h2>Anime/Cartoon</h2>
+        <div class="movie-grid">
+            <div class="movie-card" onclick="openModal('movie21')">
+                <img src="https://i.pinimg.com/474x/47/2b/93/472b93204135872917c38f14b6253549.jpg" alt="Movie 1">
+                <h3>Attack On Titan</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Crime</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie22')">
+                <img src="https://i.pinimg.com/474x/99/ef/83/99ef837028463d4f940b63c2b288222b.jpg" alt="Movie 2">
+                <h3>Jujutsu Kaisen</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Action/Comedy</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie23')">
+                <img src="https://i.pinimg.com/474x/26/66/5c/26665c12d6c84f439e0b9dc35b01a58a.jpg" alt="Movie 3">
+                <h3>Naruto Shippuden</h3>
+                <div class="rating">★★★★★</div>
+                <div class="genre">Action/Adventure</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie24')">
+                <img src="https://i.pinimg.com/736x/c9/5b/de/c95bde62b2936a56c9edb7f560d628f1.jpg" alt="Movie 4">
+                <h3>One Piece</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+            <div class="movie-card" onclick="openModal('movie25')">
+                <img src="https://i.pinimg.com/474x/33/3c/b7/333cb7bc2b575f913d302dba57bd97fa.jpg" alt="Movie 4">
+                <h3>One Punch Man</h3>
+                <div class="rating">★★★★☆</div>
+                <div class="genre">Drama/Thriller</div>
+            </div>
+        </div>
+    </div>
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="movie-trailer"></div>
+            <div id="movie-details"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 MoviesFlix. All Rights Reserved.</p>
+        <p>Follow us on:</p>
+        <p>
+            <a href="https://instagram.com">Instagram</a> |
+            <a href="https://facebook.com">Facebook</a> |
+            <a href="http://www.linkedin.com/in/amudala-sharan-sai-57ab68321">LinkedIn</a>
+        </p>
+    </footer>
+    <script>
+         const movieData = {
+            movie1: {
+                trailer: 'https://www.youtube.com/embed/-FZ-pPFAjYY?si=WpTKQCYMRzdQgwqX',
+                rating: '★★★★☆',
+                Imbd: '7.8/10',
+                genre: 'Action/Crime',
+                director: 'Matt Reeves',
+                actors: 'Robert Pattinson,Zoë Kravitz,Paul Dano,Jeffrey Wright,Colin Farrell,John Turturro,Andy Serkis,Peter Sarsgaard,Barry Keoghan'
+            },
+            movie2: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★★☆',
+                Imbd: '7.8/10',
+                genre: 'Action/Comedy',
+                director: 'Tim Miller',
+                actors: ' Ryan Reynolds · Karan Soni · Ed Skrein · Michael Benyaer · Stefan Kapicic · Brianna Hildebrand · Style Dayne · Kyle Cassie.'
+            },
+            movie3: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd:'7.8/10' ,
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie4: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie5: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie6: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie7: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd:'7.8/10' ,
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie8: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie9: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie10: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd:'7.8/10' ,
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie11: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie12: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie13: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie14: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie15: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie16: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie17: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie18: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie19: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie20: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie21: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie22: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            movie23: {
+                trailer: 'https://www.youtube.com/embed/kJQP7kiw5Fk',
+                rating: '★★★★★',
+                Imbd: '7.8/10',
+                genre: 'Drama',
+                director: 'William Brown',
+                actors: 'Sophia Grey, Tom Lee, Angela Taylor'
+            },
+            movie24: {
+                trailer: 'https://www.youtube.com/embed/2Vv-BfVoq4g',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Horror',
+                director: 'Chris Black',
+                actors: 'Sarah White, Jack Green, Emily Red'
+            },
+            movie25: {
+                trailer: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                rating: '★★★☆☆',
+                Imbd: '7.8/10',
+                genre: 'Comedy',
+                director: 'Jane Doe',
+                actors: 'Anna Blue, Peter Green, Tim Yellow'
+            },
+            
+        };
+
+        function openModal(movieId) {
+            const movie = movieData[movieId];
+            document.getElementById('movie-trailer').innerHTML = `<iframe width="100%" height="400" src="${movie.trailer}" frameborder="0" allowfullscreen></iframe>`;
+            document.getElementById('movie-details').innerHTML = `
+                <h3>Movie Details</h3>
+                <div><strong>Rating:</strong> ${movie.rating}</div>
+                <div><strong>Imdb:</strong> ${movie.Imbd}</div>
+                <div><strong>Genre:</strong> ${movie.genre}</div>
+                <div><strong>Director:</strong> ${movie.director}</div>
+                <div><strong>Actors:</strong> ${movie.actors}</div>
+            `;
+            document.getElementById('movie-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('movie-modal').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
